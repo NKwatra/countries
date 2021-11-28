@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createTheme, PaletteMode, Theme, ThemeProvider } from "@mui/material";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import getTheme, { ThemeContext } from "./lib/theme";
+import { IThemeContext } from "./types/lib/theme";
 
 function App() {
+  const [mode, setMode] = React.useState<PaletteMode>("light");
+  const themeSwitcher = React.useMemo<IThemeContext>(
+    () => ({
+      toggleMode: () =>
+        setMode((curr) => (curr === "light" ? "dark" : "light")),
+    }),
+    []
+  );
+  const theme = React.useMemo<Theme>(() => createTheme(getTheme(mode)), [mode]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContext.Provider value={themeSwitcher}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter></BrowserRouter>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 
