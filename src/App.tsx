@@ -1,7 +1,10 @@
 import { createTheme, PaletteMode, Theme, ThemeProvider } from "@mui/material";
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainContent from "./components/MainContent";
 import getTheme, { ThemeContext } from "./lib/theme";
+import Country from "./routes/Country";
+import Home from "./routes/Home";
 import { IThemeContext } from "./types/lib/theme";
 
 function App() {
@@ -17,7 +20,14 @@ function App() {
   return (
     <ThemeContext.Provider value={themeSwitcher}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter></BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}>
+              <Route index element={<MainContent />} />
+              <Route path=":country" element={<Country />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </ThemeContext.Provider>
   );
