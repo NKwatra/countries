@@ -8,7 +8,7 @@ import Home from "./routes/Home";
 import { IThemeContext } from "./types/lib/theme";
 
 function App() {
-  const [mode, setMode] = React.useState<PaletteMode>("light");
+  const [mode, setMode] = React.useState<PaletteMode>("dark");
   const themeSwitcher = React.useMemo<IThemeContext>(
     () => ({
       toggleMode: () =>

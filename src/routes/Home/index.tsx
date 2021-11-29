@@ -1,10 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Appbar from "../../components/Appbar";
 
 const Home: React.FC = () => {
   return (
     <React.Fragment>
-      <div>Home</div>
+      <Appbar />
       <Outlet />
     </React.Fragment>
   );
