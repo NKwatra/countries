@@ -25,8 +25,8 @@ export default function getTheme(mode: PaletteMode) {
           }
         : {
             background: {
-              default: "hsl(207, 26%, 17%)",
-              paper: "hsl(209, 23%, 22%)",
+              default: "hsl(209, 23%, 22%)",
+              paper: "hsl(207, 26%, 17%)",
             },
             text: {
               primary: "hsl(0, 0%, 100%)",
