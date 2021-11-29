@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import CountryInfoRow from "../CountryInfoRow";
 
-type Props = {
+export interface Props {
   /** Url for image of country's flag */
   flagUrl: string;
   /** name of the country */
@@ -12,7 +12,7 @@ type Props = {
   region: string;
   /** capital of the country */
   capital: string;
-};
+}
 
 const CountryCard: React.FC<Props> = ({
   flagUrl,
