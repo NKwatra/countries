@@ -1,5 +1,18 @@
+import CountryCard from "../CountryCard";
+import Layout from "../Layout";
+
 const MainContent: React.FC = () => {
-  return <div>Main Content</div>;
+  return (
+    <Layout>
+      <CountryCard
+        name="Albania"
+        flagUrl="https://flagcdn.com/al.svg"
+        population={38928341}
+        region="Europ"
+        capital="Tirana"
+      />
+    </Layout>
+  );
 };
 
 export default MainContent;
