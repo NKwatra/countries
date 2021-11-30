@@ -23,19 +23,21 @@ const MainContent: React.FC = () => {
       {loading ? (
         <CircularProgress />
       ) : (
-        <Grid container rowSpacing={{ xs: 6, lg: 10 }} columnSpacing={2}>
-          {countries.map((country) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-              <CountryCard
-                name={country.name}
-                flagUrl={country.flagUrl}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <div style={{ flexGrow: 1, overflowY: "scroll" }}>
+          <Grid container rowSpacing={{ xs: 6, lg: 10 }} columnSpacing={2}>
+            {countries.map((country) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                <CountryCard
+                  name={country.name}
+                  flagUrl={country.flagUrl}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       )}
     </Layout>
   );
