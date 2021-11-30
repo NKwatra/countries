@@ -22,15 +22,21 @@ export default function getTheme(mode: PaletteMode) {
               primary: "hsl(200, 15%, 8%)",
               secondary: "hsl(0, 0%, 52%)",
             },
+            primary: {
+              main: "hsl(0, 0%, 100%)",
+            },
           }
         : {
             background: {
-              default: "hsl(209, 23%, 22%)",
-              paper: "hsl(207, 26%, 17%)",
+              default: "hsl(207, 26%, 17%)",
+              paper: "hsl(209, 23%, 22%)",
             },
             text: {
               primary: "hsl(0, 0%, 100%)",
               secondary: "hsl(0, 0%, 100%)",
+            },
+            primary: {
+              main: "hsl(209, 23%, 22%)",
             },
           }),
     },

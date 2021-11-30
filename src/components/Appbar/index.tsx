@@ -14,34 +14,70 @@ const Appbar: React.FC = () => {
   const theme = useTheme();
   const mode = theme.palette.mode;
   return (
-    <AppBar position="fixed" color="inherit">
-      <Container disableGutters>
-        <Toolbar
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundImage: "none",
+      }}
+    >
+      <Toolbar
+        sx={{
+          py: 2,
+          px: {
+            xs: 2,
+            sm: 4,
+            md: 7,
+          },
+        }}
+      >
+        <Container
+          disableGutters
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            py: 2,
           }}
         >
           <Typography
-            variant="subtitle2"
             component="h2"
+            color="textPrimary"
             sx={{
               fontWeight: "fontWeightBold",
+              fontSize: {
+                xs: "0.875rem",
+                md: "1.125rem",
+                lg: "1.25rem",
+              },
             }}
           >
             Where in the world?
           </Typography>
           <Typography
-            variant="subtitle2"
             onClick={themeSwitcher.toggleMode}
-            sx={{ cursor: "pointer" }}
+            color="textPrimary"
+            sx={{
+              fontWeight: "fontWeightMedium",
+              fontSize: {
+                xs: "0.875rem",
+                md: "1.125rem",
+                lg: "1.25rem",
+              },
+              cursor: "pointer",
+              "& > svg, & > span": {
+                display: "inline-block",
+                verticalAlign: "middle",
+                color: "text.primary",
+              },
+              "& > span": {
+                ml: 1,
+              },
+            }}
           >
-            {mode === "light" ? <BsMoon /> : <BsMoonFill />} Dark Mode
+            {mode === "light" ? <BsMoon /> : <BsMoonFill />}
+            <span> Dark Mode </span>
           </Typography>
-        </Toolbar>
-      </Container>
+        </Container>
+      </Toolbar>
     </AppBar>
   );
 };
