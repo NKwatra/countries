@@ -9,23 +9,22 @@ type Props = {
 
 const CountryInfoRow: React.FC<Props> = ({ label, value }) => {
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <Typography
         variant="subtitle2"
         sx={{
           fontWeight: "fontWeightMedium",
-          display: "inline-block",
         }}
       >
-        {label}
+        {label}:&nbsp;
       </Typography>
-      {": "}
       <Typography
         variant="subtitle2"
         sx={{
           fontWeight: "fontWeightLight",
-          display: "inline-block",
+          flexGrow: 1,
         }}
+        noWrap
       >
         {value}
       </Typography>

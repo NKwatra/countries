@@ -35,6 +35,7 @@ const CountryCard: React.FC<Props> = ({
             fontWeight: "fontWeightBold",
             mb: 2,
           }}
+          noWrap
         >
           {name}
         </Typography>

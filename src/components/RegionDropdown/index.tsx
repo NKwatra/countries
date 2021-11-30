@@ -2,8 +2,12 @@ import { MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 
-const RegionDropdown: React.FC = () => {
-  const [value, setValue] = React.useState("");
+type Props = {
+  value: string;
+  setValue: (newVaue: string) => void;
+};
+
+const RegionDropdown: React.FC<Props> = ({ value, setValue }) => {
   const theme = useTheme();
   const options = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 
@@ -12,7 +16,7 @@ const RegionDropdown: React.FC = () => {
     else return value;
   }
 
-  function handleChange(e: SelectChangeEvent<string>) {
+  async function handleChange(e: SelectChangeEvent<string>) {
     const value = e.target.value;
     setValue(value);
   }

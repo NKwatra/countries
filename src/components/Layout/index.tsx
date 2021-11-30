@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { Container, useTheme } from "@mui/material";
 
 type Props = {
@@ -8,18 +10,18 @@ const Layout: React.FC<Props> = ({ children }) => {
   const theme = useTheme();
   return (
     <main
-      style={{
-        margin: -8,
-        paddingTop: 88,
-        height: "calc(100vh - 88px)",
-        maxHeight: "calc(100vh - 88px)",
-        background: theme.palette.background.default,
-      }}
+      css={css`
+        background: ${theme.palette.background.default};
+        margin: -8px;
+      `}
     >
       <Container
         maxWidth="lg"
         sx={{
-          mt: 4,
+          pt: 4,
+          px: {
+            lg: 0,
+          },
           display: "flex",
           flexDirection: "column",
           maxHeight: "100%",
