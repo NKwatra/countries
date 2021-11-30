@@ -22,15 +22,11 @@ const CountryCard: React.FC<Props> = ({
   capital,
 }) => {
   return (
-    <Card>
+    <Card sx={{ backgroundImage: "none", boxShadow: 3 }}>
       <CardMedia
         component="img"
         src={flagUrl}
-        sx={{
-          width: "100%",
-          maxWidth: "100%",
-          height: "auto",
-        }}
+        height={180}
         alt="flag of country"
       />
       <CardContent sx={{ p: 4, "&:last-child": { pb: 5 } }}>
