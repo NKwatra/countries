@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/app.css"],"names":[],"mappings":"AAAA,UAEE,qBAAsB,CACtB,QAAS,CACT,uBAAwB,CACxB,oBACF,CAEA,wBACE,YACF","file":"main.0397a3cb.chunk.css","sourcesContent":["html,\nbody {\n  box-sizing: border-box;\n  margin: 0;\n  -ms-overflow-style: none;\n  scrollbar-width: none;\n}\n\nbody::-webkit-scrollbar {\n  display: none;\n}\n"]}
