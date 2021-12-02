@@ -25,7 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}>
               <Route index element={<MainContent />} />
-              <Route path=":country" element={<Country />} />
+              <Route path=":code" element={<Country />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -9,31 +9,33 @@ import { Props as CountryInfo } from "../CountryCard";
 import RegionDropdown from "../RegionDropdown";
 import Searchbar from "../Searchbar";
 import LoadingIndicator from "../LoadingIndicator";
+import { useLazyQuery, useQuery } from "../../lib/hooks";
 
 const MainContent: React.FC = () => {
-  const [loading, setLoading] = React.useState(true);
-  const [countries, setCountries] = React.useState<CountryInfo[]>([]);
+  const {
+    loading,
+    error,
+    data: countries,
+  } = useQuery<CountryInfo[]>(networkService.loadAllCountries);
   const [region, setRegion] = React.useState<string>("");
+  const [
+    searchByRegion,
+    { data: filteredCountries, error: regionError, loading: regionLoading },
+  ] = useLazyQuery<CountryInfo[], { region: string }>(
+    networkService.loadByRegion,
+    { region }
+  );
   const theme = useTheme();
+  const data = filteredCountries || countries;
 
-  React.useEffect(() => {
-    async function loadCountries() {
-      const countriesData = await networkService.loadAllCountries();
-      setCountries(countriesData);
-      setLoading(false);
-    }
-    loadCountries();
-  }, []);
-
-  async function loadByRegion(value: string) {
+  function loadByRegion(value: string) {
     setRegion(value);
-    setLoading(true);
     document.title = `Countries | ${value}`;
-    const countriesData = await networkService.loadByRegion(
-      value.toLowerCase()
-    );
-    setCountries(countriesData);
-    setLoading(false);
+    searchByRegion({ region: value.toLowerCase() });
+  }
+
+  if (error || regionError) {
+    return <div>Something went Wrong</div>;
   }
 
   return (
@@ -61,7 +63,7 @@ const MainContent: React.FC = () => {
           }
         `}
       >
-        {loading ? (
+        {loading || regionLoading ? (
           <LoadingIndicator />
         ) : (
           <Grid
@@ -73,7 +75,7 @@ const MainContent: React.FC = () => {
               lg: 6,
             }}
           >
-            {countries.map((country) => (
+            {data!.map((country) => (
               <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={country.name}>
                 <CountryCard
                   name={country.name}
