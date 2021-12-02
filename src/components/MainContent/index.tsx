@@ -50,21 +50,30 @@ const MainContent: React.FC = () => {
           <RegionDropdown value={region} setValue={loadByRegion} />
         </Grid>
       </Grid>
-      {loading ? (
-        <CircularProgress color="primary" />
-      ) : (
-        <div
-          css={css`
-            flex-grow: 1;
-            overflow-y: scroll;
-            padding-left: 16px;
-            padding-right: 16px;
-            ${theme.breakpoints.up("sm")} {
-              padding-left: 0;
-              padding-right: 0;
-            } ;
-          `}
-        >
+      <div
+        css={css`
+          padding-left: 16px;
+          padding-right: 16px;
+          ${theme.breakpoints.up("sm")} {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        `}
+      >
+        {loading ? (
+          <CircularProgress
+            sx={{
+              mt: {
+                xs: 10,
+                sm: 15,
+                lg: 20,
+              },
+              color: "text.primary",
+              ml: "calc(50% - 20px)",
+              transform: "trans",
+            }}
+          />
+        ) : (
           <Grid
             container
             rowSpacing={{ xs: 6, lg: 10 }}
@@ -87,8 +96,8 @@ const MainContent: React.FC = () => {
               </Grid>
             ))}
           </Grid>
-        </div>
-      )}
+        )}
+      </div>
     </Layout>
   );
 };
