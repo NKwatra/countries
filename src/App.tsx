@@ -6,6 +6,7 @@ import getTheme, { ThemeContext } from "./lib/theme";
 import Country from "./routes/Country";
 import Home from "./routes/Home";
 import { IThemeContext } from "./types/lib/theme";
+import "./app.css";
 
 function App() {
   const [mode, setMode] = React.useState<PaletteMode>("dark");
