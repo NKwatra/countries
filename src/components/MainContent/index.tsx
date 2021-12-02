@@ -7,7 +7,7 @@ import CountryCard from "../CountryCard";
 import Layout from "../Layout";
 import { Props as CountryInfo } from "../CountryCard";
 import RegionDropdown from "../RegionDropdown";
-// import Searchbar from "../Searchbar";
+import Searchbar from "../Searchbar";
 
 const MainContent: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -44,7 +44,7 @@ const MainContent: React.FC = () => {
         sx={{ mb: 4 }}
       >
         <Grid item xs={12} sm={6} md={5}>
-          {/* <Searchbar /> */}
+          <Searchbar />
         </Grid>
         <Grid item xs={7} sm={3} md={2}>
           <RegionDropdown value={region} setValue={loadByRegion} />
@@ -82,6 +82,7 @@ const MainContent: React.FC = () => {
                   population={country.population}
                   region={country.region}
                   capital={country.capital}
+                  code={country.code}
                 />
               </Grid>
             ))}

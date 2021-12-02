@@ -12,6 +12,8 @@ export interface Props {
   region: string;
   /** capital of the country */
   capital: string;
+  /** code of the country */
+  code: string;
 }
 
 const CountryCard: React.FC<Props> = ({
