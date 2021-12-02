@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { CircularProgress, Grid, useTheme } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import React from "react";
 import networkService from "../../lib/network";
 import CountryCard from "../CountryCard";
@@ -8,6 +8,7 @@ import Layout from "../Layout";
 import { Props as CountryInfo } from "../CountryCard";
 import RegionDropdown from "../RegionDropdown";
 import Searchbar from "../Searchbar";
+import LoadingIndicator from "../LoadingIndicator";
 
 const MainContent: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -61,18 +62,7 @@ const MainContent: React.FC = () => {
         `}
       >
         {loading ? (
-          <CircularProgress
-            sx={{
-              mt: {
-                xs: 10,
-                sm: 15,
-                lg: 20,
-              },
-              color: "text.primary",
-              ml: "calc(50% - 20px)",
-              transform: "trans",
-            }}
-          />
+          <LoadingIndicator />
         ) : (
           <Grid
             container
