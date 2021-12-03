@@ -5,31 +5,40 @@ import { MdOutlineSearch } from "react-icons/md";
 import { debounce } from "lodash";
 import networkService from "../../lib/network";
 import { Link } from "react-router-dom";
+import { useLazyQuery, useQueryResponse } from "../../lib/hooks";
 
-type Suggestion = {
+export interface Suggestion {
   name: string;
   code: string;
-};
+}
 
 const Searchbar: React.FC = () => {
   const [inputValue, setInputValue] = React.useState("");
-  const [options, setOptions] = React.useState<Suggestion[]>([]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchOptions = React.useCallback(
-    debounce(async function (name: string) {
-      if (!name) {
-        return;
-      }
-      const suggestions = await networkService.loadByName(name);
-      setOptions(suggestions);
-    }, 300),
-    []
-  );
+  const callback = React.useCallback(async function callback({
+    name,
+  }: {
+    name: string;
+  }): Promise<useQueryResponse<Suggestion[]>> {
+    if (!name) {
+      return { status: "success", data: [] };
+    }
+    const suggestions = await networkService.loadByName({ name });
+    return suggestions;
+  },
+  []);
+  const [fetchOptions, { data: options }] = useLazyQuery<
+    Suggestion[],
+    { name: string }
+  >(callback);
   const theme = useTheme();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedFetchOptions = React.useCallback(debounce(fetchOptions, 300), [
+    fetchOptions,
+  ]);
 
   function handleInputChange(_: any, value: string) {
     setInputValue(value);
-    fetchOptions(value.toLowerCase());
+    debouncedFetchOptions({ name: value.toLowerCase() });
   }
 
   function getOptionLabel(option: Suggestion) {
@@ -75,7 +84,7 @@ const Searchbar: React.FC = () => {
       getOptionLabel={getOptionLabel}
       renderOption={renderOption}
       filterOptions={(x) => x}
-      options={options}
+      options={options || []}
       disableClearable
       noOptionsText="No Country Found"
       renderInput={({ InputProps, ...rest }) => (

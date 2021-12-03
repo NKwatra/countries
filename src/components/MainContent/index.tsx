@@ -16,14 +16,13 @@ const MainContent: React.FC = () => {
     loading,
     error,
     data: countries,
-  } = useQuery<CountryInfo[]>(networkService.loadAllCountries);
+  } = useQuery(networkService.loadAllCountries);
   const [region, setRegion] = React.useState<string>("");
   const [
     searchByRegion,
     { data: filteredCountries, error: regionError, loading: regionLoading },
   ] = useLazyQuery<CountryInfo[], { region: string }>(
-    networkService.loadByRegion,
-    { region }
+    networkService.loadByRegion
   );
   const theme = useTheme();
   const data = filteredCountries || countries;

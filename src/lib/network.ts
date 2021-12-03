@@ -1,8 +1,9 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import type { CountryData, CountryDetail } from "../types/lib/network";
 import type { useQueryResponse } from "./hooks";
 import { Props as CountryCardProps } from "../components/CountryCard";
 import type { Props as CountryDetailProps } from "../routes/Country";
+import { Suggestion } from "../components/Searchbar";
 
 const instance = axios.create({
   baseURL: "https://restcountries.com/v3.1",
@@ -46,25 +47,27 @@ const networkService = {
     return await loadCountrySummary(`/region/${region}`);
   },
 
-  async loadByName(name: string) {
+  async loadByName({
+    name,
+  }: {
+    name: string;
+  }): Promise<useQueryResponse<Suggestion[]>> {
     try {
       const response = await instance.get<Pick<CountryData, "name" | "cca3">[]>(
         `name/${name}?fields=name,cca3`
       );
       const countries = response.data;
-      return countries.map(({ name, cca3 }) => ({
-        name: name.common,
-        code: cca3,
-      }));
+      return {
+        status: "success",
+        data: countries.map(({ name, cca3 }) => ({
+          name: name.common,
+          code: cca3,
+        })),
+      };
     } catch (error) {
-      const typedError = error as AxiosError;
-      if (!typedError.request) {
-        console.error("No Internet connection");
-      } else if (typedError.response) {
-        console.error(typedError.response.data);
-        console.error(typedError.response.status);
-      }
-      return [];
+      return {
+        status: "error",
+      };
     }
   },
 
