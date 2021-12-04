@@ -12,6 +12,7 @@ import { css } from "@emotion/react";
 import CountryInfoRow from "../../components/CountryInfoRow";
 import { CountryName } from "../../types/lib/network";
 import LinkButton from "../../components/LinkButton";
+import Error from "../../components/Error";
 
 export interface Props extends Omit<CountryCardProps, "code"> {
   nativeName: string;
@@ -47,7 +48,7 @@ const Country: React.FC = () => {
   }, [details?.borders, loadBorderCountries]);
 
   if (error) {
-    return <div>Something went wrong</div>;
+    return <Error />;
   }
 
   return (

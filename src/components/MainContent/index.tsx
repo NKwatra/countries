@@ -10,6 +10,7 @@ import RegionDropdown from "../RegionDropdown";
 import Searchbar from "../Searchbar";
 import LoadingIndicator from "../LoadingIndicator";
 import { useLazyQuery } from "../../lib/hooks";
+import Error from "../Error";
 
 type Props = {
   loading: boolean;
@@ -35,7 +36,7 @@ const MainContent: React.FC<Props> = ({ loading, error, countries }) => {
   }
 
   if (error || regionError) {
-    return <div>Something went Wrong</div>;
+    return <Error />;
   }
 
   return (
