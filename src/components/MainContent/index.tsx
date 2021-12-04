@@ -9,14 +9,15 @@ import { Props as CountryInfo } from "../CountryCard";
 import RegionDropdown from "../RegionDropdown";
 import Searchbar from "../Searchbar";
 import LoadingIndicator from "../LoadingIndicator";
-import { useLazyQuery, useQuery } from "../../lib/hooks";
+import { useLazyQuery } from "../../lib/hooks";
 
-const MainContent: React.FC = () => {
-  const {
-    loading,
-    error,
-    data: countries,
-  } = useQuery(networkService.loadAllCountries);
+type Props = {
+  loading: boolean;
+  error: boolean;
+  countries: CountryInfo[] | undefined;
+};
+
+const MainContent: React.FC<Props> = ({ loading, error, countries }) => {
   const [region, setRegion] = React.useState<string>("");
   const [
     searchByRegion,

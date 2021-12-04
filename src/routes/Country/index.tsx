@@ -70,7 +70,9 @@ const Country: React.FC = () => {
           path="/"
         />
         {loading ? (
-          <LoadingIndicator />
+          <Box pt={4}>
+            <LoadingIndicator />
+          </Box>
         ) : (
           <Grid
             container
@@ -229,9 +231,8 @@ const Country: React.FC = () => {
                           `}
                         >
                           {borders!.map((country) => (
-                            <Box px={1 / 2}>
+                            <Box px={1 / 2} key={country.name}>
                               <LinkButton
-                                key={country.name}
                                 text={country.name}
                                 path={`/${country.code}`}
                               />

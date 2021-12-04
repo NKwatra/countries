@@ -8,11 +8,14 @@ import Home from "./routes/Home";
 import { IThemeContext } from "./types/lib/theme";
 import "./app.css";
 import { THEME_KEY } from "./lib/constants";
+import { useQuery } from "./lib/hooks";
+import networkService from "./lib/network";
 
 function App() {
   const [mode, setMode] = React.useState<PaletteMode>(
     (localStorage.getItem(THEME_KEY) as PaletteMode) || "dark"
   );
+  const { loading, error, data } = useQuery(networkService.loadAllCountries);
   const themeSwitcher = React.useMemo<IThemeContext>(
     () => ({
       toggleMode: () =>
@@ -31,7 +34,16 @@ function App() {
         <BrowserRouter basename="/countries">
           <Routes>
             <Route path="/" element={<Home />}>
-              <Route index element={<MainContent />} />
+              <Route
+                index
+                element={
+                  <MainContent
+                    loading={loading}
+                    error={error}
+                    countries={data}
+                  />
+                }
+              />
               <Route path=":code" element={<Country />} />
             </Route>
           </Routes>
