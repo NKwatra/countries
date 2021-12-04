@@ -1,9 +1,12 @@
 import axios from "axios";
-import type { CountryData, CountryDetail } from "../types/lib/network";
+import type {
+  CountryData,
+  CountryDetail,
+  CountryName,
+} from "../types/lib/network";
 import type { useQueryResponse } from "./hooks";
 import { Props as CountryCardProps } from "../components/CountryCard";
 import type { Props as CountryDetailProps } from "../routes/Country";
-import { Suggestion } from "../components/Searchbar";
 
 const instance = axios.create({
   baseURL: "https://restcountries.com/v3.1",
@@ -34,41 +37,55 @@ async function loadCountrySummary(
   }
 }
 
+async function loadCountryNames(
+  path: string
+): Promise<useQueryResponse<CountryName[]>> {
+  try {
+    const response = await instance.get<Pick<CountryData, "name" | "cca3">[]>(
+      `${path}fields=name,cca3`
+    );
+    const countries = response.data;
+    return {
+      status: "success",
+      data: countries.map(({ name, cca3 }) => ({
+        name: name.common,
+        code: cca3,
+      })),
+    };
+  } catch (error) {
+    return {
+      status: "error",
+    };
+  }
+}
+
 const networkService = {
-  async loadAllCountries(): Promise<useQueryResponse<CountryCardProps[]>> {
-    return await loadCountrySummary("/all");
+  loadAllCountries(): Promise<useQueryResponse<CountryCardProps[]>> {
+    return loadCountrySummary("/all");
   },
 
-  async loadByRegion({
+  loadByRegion({
     region,
   }: {
     region: string;
   }): Promise<useQueryResponse<CountryCardProps[]>> {
-    return await loadCountrySummary(`/region/${region}`);
+    return loadCountrySummary(`/region/${region}`);
   },
 
-  async loadByName({
+  loadByName({
     name,
   }: {
     name: string;
-  }): Promise<useQueryResponse<Suggestion[]>> {
-    try {
-      const response = await instance.get<Pick<CountryData, "name" | "cca3">[]>(
-        `name/${name}?fields=name,cca3`
-      );
-      const countries = response.data;
-      return {
-        status: "success",
-        data: countries.map(({ name, cca3 }) => ({
-          name: name.common,
-          code: cca3,
-        })),
-      };
-    } catch (error) {
-      return {
-        status: "error",
-      };
-    }
+  }): Promise<useQueryResponse<CountryName[]>> {
+    return loadCountryNames(`/name/${name}?`);
+  },
+
+  loadBorderCountries({
+    codes,
+  }: {
+    codes: string[];
+  }): Promise<useQueryResponse<CountryName[]>> {
+    return loadCountryNames(`/alpha?codes=${codes.join(",")}&`);
   },
 
   async loadByCode({
@@ -78,7 +95,7 @@ const networkService = {
   }): Promise<useQueryResponse<CountryDetailProps>> {
     try {
       const response = await instance.get<CountryDetail>(
-        `alpha/${code}?fields=name,population,region,capital,subregion,languages,flags,currencies,tld`
+        `alpha/${code}?fields=name,population,region,capital,subregion,languages,flags,currencies,tld,borders`
       );
       const country = response.data;
       const { flags, name, currencies, languages, tld, capital, ...rest } =
@@ -96,7 +113,9 @@ const networkService = {
           name: name.common,
           nativeName,
           tld: tld.join(", "),
-          currencies: Object.values(currencies).join(","),
+          currencies: Object.values(currencies)
+            .map((currency) => currency.name)
+            .join(","),
           languages: Object.values(languages).join(","),
           capital: cap,
         },

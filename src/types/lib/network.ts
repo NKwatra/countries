@@ -17,4 +17,10 @@ export interface CountryDetail extends Omit<CountryData, "cca3"> {
   currencies: { [key: string]: { name: string } };
   languages: { [key: string]: string };
   tld: string[];
+  borders: string[];
+}
+
+export interface CountryName {
+  name: string;
+  code: string;
 }

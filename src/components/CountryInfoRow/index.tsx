@@ -5,16 +5,22 @@ type Props = {
   label: string;
   /** Value of the field */
   value: string;
+  /** Whether there should be gutter at bottom */
+  gutter?: boolean;
 };
 
-const CountryInfoRow: React.FC<Props> = ({ label, value }) => {
+const CountryInfoRow: React.FC<Props> = ({ label, value, gutter }) => {
   return (
     <div style={{ display: "flex" }}>
       <Typography
         variant="subtitle2"
         sx={{
           fontWeight: "fontWeightMedium",
+          flexShrink: 0,
         }}
+        noWrap
+        color="textPrimary"
+        gutterBottom={gutter}
       >
         {label}:&nbsp;
       </Typography>
@@ -25,6 +31,8 @@ const CountryInfoRow: React.FC<Props> = ({ label, value }) => {
           flexGrow: 1,
         }}
         noWrap
+        color="textPrimary"
+        gutterBottom={gutter}
       >
         {value}
       </Typography>
