@@ -48,6 +48,7 @@ export function useQuery<T, U>(
 
   React.useEffect(() => {
     async function execCallback() {
+      setLoading(true);
       let response;
       if (args) {
         response = await callback(args);
