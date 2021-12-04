@@ -7,13 +7,20 @@ import Country from "./routes/Country";
 import Home from "./routes/Home";
 import { IThemeContext } from "./types/lib/theme";
 import "./app.css";
+import { THEME_KEY } from "./lib/constants";
 
 function App() {
-  const [mode, setMode] = React.useState<PaletteMode>("dark");
+  const [mode, setMode] = React.useState<PaletteMode>(
+    (localStorage.getItem(THEME_KEY) as PaletteMode) || "dark"
+  );
   const themeSwitcher = React.useMemo<IThemeContext>(
     () => ({
       toggleMode: () =>
-        setMode((curr) => (curr === "light" ? "dark" : "light")),
+        setMode((curr) => {
+          const newMode = curr === "light" ? "dark" : "light";
+          localStorage.setItem(THEME_KEY, newMode);
+          return newMode;
+        }),
     }),
     []
   );
@@ -21,7 +28,7 @@ function App() {
   return (
     <ThemeContext.Provider value={themeSwitcher}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
+        <BrowserRouter basename="/countries">
           <Routes>
             <Route path="/" element={<Home />}>
               <Route index element={<MainContent />} />
