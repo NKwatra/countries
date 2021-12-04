@@ -69,185 +69,183 @@ const Country: React.FC = () => {
           startIcon={<MdOutlineKeyboardBackspace />}
           path="/"
         />
-        <Grid
-          container
-          columnSpacing={{
-            sm: 4,
-            md: 10,
-            lg: 12,
-          }}
-          rowSpacing={4}
-          justifyContent="space-between"
-          sx={{
-            mt: 5 / 2,
-          }}
-        >
-          {loading ? (
-            <LoadingIndicator />
-          ) : (
-            <React.Fragment>
-              <Grid item xs={12} sm={6}>
-                <img
-                  src={details!.flagUrl}
-                  alt="Flag of country"
-                  css={{
-                    width: "100%",
-                    height: "auto",
-                    boxShadow: theme.shadows[4],
-                  }}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                sx={{
-                  mt: {
-                    sm: 1,
-                    lg: 3,
-                  },
+        {loading ? (
+          <LoadingIndicator />
+        ) : (
+          <Grid
+            container
+            columnSpacing={{
+              sm: 4,
+              md: 10,
+              lg: 12,
+            }}
+            rowSpacing={4}
+            justifyContent="space-between"
+            sx={{
+              mt: 5 / 2,
+            }}
+          >
+            <Grid item xs={12} sm={6}>
+              <img
+                src={details!.flagUrl}
+                alt="Flag of country"
+                css={{
+                  width: "100%",
+                  height: "auto",
+                  boxShadow: theme.shadows[4],
                 }}
-              >
-                <Grid container rowSpacing={2}>
-                  <Grid item xs={12}>
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{
+                mt: {
+                  sm: 1,
+                  lg: 3,
+                },
+              }}
+            >
+              <Grid container rowSpacing={2}>
+                <Grid item xs={12}>
+                  <Typography
+                    fontWeight="bold"
+                    color="textPrimary"
+                    variant="h6"
+                  >
+                    {details!.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <CountryInfoRow
+                    label="Native Name"
+                    value={details!.nativeName}
+                    gutter
+                  />
+                  <CountryInfoRow
+                    label="Population"
+                    value={details!.population.toLocaleString()}
+                    gutter
+                  />
+                  <CountryInfoRow
+                    label="Region"
+                    value={details!.region}
+                    gutter
+                  />
+                  <CountryInfoRow
+                    label="Sub Region"
+                    value={details!.subregion}
+                    gutter
+                  />
+                  <CountryInfoRow label="Capital" value={details!.capital} />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{
+                    mt: {
+                      xs: 4,
+                      sm: 0,
+                    },
+                  }}
+                >
+                  <CountryInfoRow
+                    label="Top Level Domain"
+                    value={details!.tld}
+                    gutter
+                  />
+                  <CountryInfoRow
+                    label="Currencies"
+                    value={details!.currencies}
+                    gutter
+                  />
+                  <CountryInfoRow
+                    label="Languages"
+                    value={details!.languages}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    mt: {
+                      xs: 2,
+                      sm: 1,
+                      md: 2,
+                      lg: 5,
+                    },
+                  }}
+                >
+                  <div
+                    css={css`
+                      ${theme.breakpoints.up("sm")} {
+                        display: flex;
+                        align-items: center;
+                      }
+                    `}
+                  >
                     <Typography
-                      fontWeight="bold"
                       color="textPrimary"
-                      variant="h6"
+                      variant="subtitle2"
+                      noWrap
+                      sx={{
+                        flexShrink: 0,
+                        pb: {
+                          xs: 1,
+                          md: 0,
+                        },
+                      }}
                     >
-                      {details!.name}
+                      Border Countries:&nbsp;
                     </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <CountryInfoRow
-                      label="Native Name"
-                      value={details!.nativeName}
-                      gutter
-                    />
-                    <CountryInfoRow
-                      label="Population"
-                      value={details!.population.toLocaleString()}
-                      gutter
-                    />
-                    <CountryInfoRow
-                      label="Region"
-                      value={details!.region}
-                      gutter
-                    />
-                    <CountryInfoRow
-                      label="Sub Region"
-                      value={details!.subregion}
-                      gutter
-                    />
-                    <CountryInfoRow label="Capital" value={details!.capital} />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    sx={{
-                      mt: {
-                        xs: 4,
-                        sm: 0,
-                      },
-                    }}
-                  >
-                    <CountryInfoRow
-                      label="Top Level Domain"
-                      value={details!.tld}
-                      gutter
-                    />
-                    <CountryInfoRow
-                      label="Currencies"
-                      value={details!.currencies}
-                      gutter
-                    />
-                    <CountryInfoRow
-                      label="Languages"
-                      value={details!.languages}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      mt: {
-                        xs: 2,
-                        sm: 1,
-                        md: 2,
-                        lg: 5,
-                      },
-                    }}
-                  >
                     <div
                       css={css`
-                        ${theme.breakpoints.up("sm")} {
-                          display: flex;
-                          align-items: center;
-                        }
+                        flex-grow: 1;
                       `}
                     >
-                      <Typography
-                        color="textPrimary"
-                        variant="subtitle2"
-                        noWrap
-                        sx={{
-                          flexShrink: 0,
-                          pb: {
-                            xs: 1,
-                            md: 0,
-                          },
-                        }}
-                      >
-                        Border Countries:&nbsp;
-                      </Typography>
-                      <div
-                        css={css`
-                          flex-grow: 1;
-                        `}
-                      >
-                        {borderLoading ? (
-                          <Skeleton
-                            animation="wave"
-                            variant="text"
-                            sx={{ width: "100%" }}
-                            height={30}
-                          />
-                        ) : borderError ? (
-                          <Typography
-                            variant="subtitle2"
-                            color="textPrimary"
-                            fontWeight="light"
-                          >
-                            Couldn't load border countries
-                          </Typography>
-                        ) : (
-                          <div
-                            css={css`
-                              display: flex;
-                              flex-wrap: wrap;
-                              row-gap: ${theme.spacing(1)};
-                            `}
-                          >
-                            {borders!.map((country) => (
-                              <Box px={1 / 2}>
-                                <LinkButton
-                                  key={country.name}
-                                  text={country.name}
-                                  path={`/${country.code}`}
-                                />
-                              </Box>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+                      {borderLoading ? (
+                        <Skeleton
+                          animation="wave"
+                          variant="text"
+                          sx={{ width: "100%" }}
+                          height={30}
+                        />
+                      ) : borderError ? (
+                        <Typography
+                          variant="subtitle2"
+                          color="textPrimary"
+                          fontWeight="light"
+                        >
+                          Couldn't load border countries
+                        </Typography>
+                      ) : (
+                        <div
+                          css={css`
+                            display: flex;
+                            flex-wrap: wrap;
+                            row-gap: ${theme.spacing(1)};
+                          `}
+                        >
+                          {borders!.map((country) => (
+                            <Box px={1 / 2}>
+                              <LinkButton
+                                key={country.name}
+                                text={country.name}
+                                path={`/${country.code}`}
+                              />
+                            </Box>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  </Grid>
+                  </div>
                 </Grid>
               </Grid>
-            </React.Fragment>
-          )}
-        </Grid>
+            </Grid>
+          </Grid>
+        )}
       </div>
     </Layout>
   );
